@@ -5,19 +5,37 @@ on:
   workflow_dispatch: # Allow the workflow to be triggered also manually.
 
 jobs:
-  download:
+  download-and-archive:
     runs-on: ubuntu-latest
     steps:
       - name: macOS/amd64 binary
         run: |
           curl -Lo copilot-darwin-amd64 https://github.com/efekarakus/github-release-playground/releases/download/${{ env.GITHUB_REF }}/copilot-darwin-amd64
           chmod +x copilot-darwin-amd64
-      - name: Print previous step
-        run: ls
-  archive:
+          tar czf copilot_${{ env.GITHUB_REF }}_macOS_amd64.tar.gz copilot-darwin-amd64
+      - name: macOS/arm64 binary
+        run: |
+          curl -Lo copilot-darwin-arm64 https://github.com/efekarakus/github-release-playground/releases/download/${{ env.GITHUB_REF }}/copilot-darwin-arm64
+          chmod +x copilot-darwin-arm64
+          tar czf copilot_${{ env.GITHUB_REF }}_macOS_arm64.tar.gz copilot-darwin-arm64
+      - name: linux/amd64 binary
+        run: |
+          curl -Lo copilot-linux-amd64 https://github.com/efekarakus/github-release-playground/releases/download/${{ env.GITHUB_REF }}/copilot-darwin-arm64
+          chmod +x copilot-linux-amd64
+          tar czf copilot_${{ env.GITHUB_REF }}_linux_amd64.tar.gz copilot-linux-amd64
+      - name: Save archive files
+        uses: actions/upload-artifact@v2
+        with:
+          name: upload tar files
+          path: '*.tar.gz'
+
+  update-release:
     runs-on: ubuntu-latest
+    needs: download-and-archive
     steps:
-      - name: macOS/amd64 binary
-        run: tar czf copilot_${{ env.GITHUB_REF }}_macOS_amd4.tar.gz copilot
-      - name: Print previous step
+      - name: Download math result for job 1
+        uses: actions/download-artifact@v2
+        with:
+          name: upload tar files
+      - name: Print files
         run: ls
