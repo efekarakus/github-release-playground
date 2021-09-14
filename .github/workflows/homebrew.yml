@@ -22,8 +22,8 @@ jobs:
           tar czf copilot_${{ env.GITHUB_REF }}_macOS_arm64.tar.gz copilot
       - name: linux/amd64 binary
         run: |
-          curl -Lo copilot-linux-amd64 https://github.com/efekarakus/github-release-playground/releases/download/${{ env.GITHUB_REF }}/copilot-darwin-arm64
-          cp copilot-linux-amd64 copilot
+          curl -Lo copilot-linux https://github.com/efekarakus/github-release-playground/releases/download/${{ env.GITHUB_REF }}/copilot-linux
+          cp copilot-linux copilot
           chmod +x copilot
           tar czf copilot_${{ env.GITHUB_REF }}_linux_amd64.tar.gz copilot
       - name: Save archive files
