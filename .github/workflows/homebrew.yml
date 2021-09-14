@@ -1,9 +1,8 @@
 name: homebrew
 on:
-  push:
-    release:       
-      - released
-      - edited
+  release:       
+    - released
+    - edited
   workflow_dispatch: # Allow the workflow to be triggered also manually.
 
 jobs:
