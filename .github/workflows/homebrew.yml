@@ -11,18 +11,21 @@ jobs:
       - name: macOS/amd64 binary
         run: |
           curl -Lo copilot-darwin-amd64 https://github.com/efekarakus/github-release-playground/releases/download/${{ env.GITHUB_REF }}/copilot-darwin-amd64
-          chmod +x copilot-darwin-amd64
-          tar czf copilot_${{ env.GITHUB_REF }}_macOS_amd64.tar.gz copilot-darwin-amd64
+          cp copilot-darwin-amd64 copilot
+          chmod +x copilot
+          tar czf copilot_${{ env.GITHUB_REF }}_macOS_amd64.tar.gz copilot
       - name: macOS/arm64 binary
         run: |
           curl -Lo copilot-darwin-arm64 https://github.com/efekarakus/github-release-playground/releases/download/${{ env.GITHUB_REF }}/copilot-darwin-arm64
-          chmod +x copilot-darwin-arm64
-          tar czf copilot_${{ env.GITHUB_REF }}_macOS_arm64.tar.gz copilot-darwin-arm64
+          cp copilot-darwin-arm64 copilot
+          chmod +x copilot
+          tar czf copilot_${{ env.GITHUB_REF }}_macOS_arm64.tar.gz copilot
       - name: linux/amd64 binary
         run: |
           curl -Lo copilot-linux-amd64 https://github.com/efekarakus/github-release-playground/releases/download/${{ env.GITHUB_REF }}/copilot-darwin-arm64
-          chmod +x copilot-linux-amd64
-          tar czf copilot_${{ env.GITHUB_REF }}_linux_amd64.tar.gz copilot-linux-amd64
+          cp copilot-linux-amd64 copilot
+          chmod +x copilot
+          tar czf copilot_${{ env.GITHUB_REF }}_linux_amd64.tar.gz copilot
       - name: Save archive files
         uses: actions/upload-artifact@v2
         with:
