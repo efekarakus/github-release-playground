@@ -1,8 +1,7 @@
 name: homebrew
 on:
-  release:       
-    - released
-    - edited
+  release:  
+    types: [released, edited]
   workflow_dispatch: # Allow the workflow to be triggered also manually.
 
 jobs:
