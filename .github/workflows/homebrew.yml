@@ -11,6 +11,8 @@ jobs:
       - name: macOS/amd64 binary
         if: startsWith(github.ref, 'refs/tags/')
         run: |
+          echo ${GITHUB_REF}
+          echo $GITHUB_REF
           curl -Lo copilot-darwin-amd64 https://github.com/efekarakus/github-release-playground/releases/download/${GITHUB_REF}/copilot-darwin-amd64
           cp copilot-darwin-amd64 copilot
           chmod +x copilot
