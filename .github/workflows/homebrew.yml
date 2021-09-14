@@ -1,0 +1,19 @@
+name: homebrew
+on:
+  push:
+    release:       
+      - released
+      - edited
+  workflow_dispatch: # Allow the workflow to be triggered also manually.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+  steps:
+    - name: Archive macOS amd64
+      run: |
+        curl -Lo copilot-darwin-amd64 https://github.com/efekarakus/github-release-playground/releases/download/${{ env.GITHUB_REF }}/copilot-darwin-amd64
+        chmod +x copilot-darwin-amd64
+        tar czf copilot_${{ env.GITHUB_REF }}_macOS_amd4.tar.gz copilot
+    - name: Print previous step
+      run: ls
