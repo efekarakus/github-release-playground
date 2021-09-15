@@ -117,5 +117,6 @@ jobs:
         with:
           path: homebrew-tap
           delete-branch: true
+          push-to-fork: ecs-cicd-bot/copilot-pipeline-test
           branch: upgrade-copilot-REPLACEME
           token: ${{ secrets.ECS_CICD_BOT }}
