@@ -113,6 +113,7 @@ jobs:
           git add bottle-configs/copilot-cli.json
           git commit -m "chore: upgrade copilot-cli to ${GITHUB_REF##*/}"
       - name: Set pull-request variables
+        id: vars
         run: |
           echo ::set-output name=version::"${GITHUB_REF##*/}"
           echo ::set-output name=pr_title::"chore: upgrade copilot-cli to ${GITHUB_REF##*/}"
