@@ -115,4 +115,4 @@ jobs:
         with:
           path: homebrew-tap
           delete-branch: true
-          branch: upgrade-copilot-${GITHUB_REF##*/}
+          branch: upgrade-copilot-REPLACEME
