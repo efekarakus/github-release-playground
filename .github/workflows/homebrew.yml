@@ -73,3 +73,9 @@ jobs:
         run: openssl dgst -sha256 copilot_${GITHUB_REF##*/}_linux_amd64.tar.gz
       - name: linux/arm64 binary
         run: openssl dgst -sha256 copilot_${GITHUB_REF##*/}_linux_arm64.tar.gz
+      - name: Checkout bottle repo
+        uses: actions/checkout@v2
+        with:
+          repository: 'efekarakus/copilot-pipeline-test'
+      - name: print files
+        run: ls
