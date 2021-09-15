@@ -66,14 +66,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: save tar files
-      - name: macOS/amd64 binary
-        run: openssl dgst -sha256 copilot_${GITHUB_REF##*/}_macOS_amd64.tar.gz
-      - name: macOS/arm64 binary
-        run: openssl dgst -sha256 copilot_${GITHUB_REF##*/}_macOS_arm64.tar.gz
-      - name: linux/amd64 binary
-        run: openssl dgst -sha256 copilot_${GITHUB_REF##*/}_linux_amd64.tar.gz
-      - name: linux/arm64 binary
-        run: openssl dgst -sha256 copilot_${GITHUB_REF##*/}_linux_arm64.tar.gz
       - name: Checkout bottle repo
         uses: actions/checkout@v2
         with:
@@ -111,3 +103,16 @@ jobs:
           jq --arg sha "$sha" '.bottle.sha256.linux_arm = "'$sha'"' homebrew-tap/bottle-configs/copilot-cli.json > "$tmp" && mv "$tmp" homebrew-tap/bottle-configs/copilot-cli.json
       - name: Print file
         run: cat homebrew-tap/bottle-configs/copilot-cli.json
+      - name: Create commits
+        run: |
+          cd homebrew-tap
+          git config user.name 'ecs-cicd-bot'
+          git config user.email 'ecs-cicd-bot@users.noreply.github.com'
+          git add bottle-configs/copilot-cli.json
+          git commit -m "chore: upgrade copilot-cli to ${GITHUB_REF##*/}"
+      - name: Create pull-request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          delete-branch: true
+          branch: upgrade-copilot-${GITHUB_REF##*/}
+          push-to-fork: efekarakus/copilot-pipeline-test
