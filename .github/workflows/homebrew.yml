@@ -86,7 +86,7 @@ jobs:
       - name: Update root_url
         run: |
           tmp=$(mktemp)
-          jq --arg version "${GITHUB_REF##*/}" '.bottle.root_url = "'https://github.com/aws/copilot-cli/releases/download/v${version}/copilot_${version}_'"' homebrew-tap/bottle-configs/copilot-cli.json > "$tmp" && mv "$tmp" homebrew-tap/bottle-configs/copilot-cli.json
+          jq --arg version "${GITHUB_REF##*/}" '.bottle.root_url = "'https://github.com/aws/copilot-cli/releases/download/v$version/copilot_$version_'"' homebrew-tap/bottle-configs/copilot-cli.json > "$tmp" && mv "$tmp" homebrew-tap/bottle-configs/copilot-cli.json
       - name: Update sierra
         run: |
           sha=$(openssl dgst -sha256 ${{steps.download.outputs.download-path}}/copilot_${GITHUB_REF##*/}_macOS_amd64.tar.gz | awk '{print $NF}') 
