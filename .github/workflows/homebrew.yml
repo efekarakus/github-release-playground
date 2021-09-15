@@ -118,3 +118,4 @@ jobs:
           path: homebrew-tap
           delete-branch: true
           branch: upgrade-copilot-REPLACEME
+          token: ${{ secrets.ECS_CICD_BOT }}
