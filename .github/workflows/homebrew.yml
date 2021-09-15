@@ -112,13 +112,19 @@ jobs:
           git config user.email 'ecs-cicd-bot@users.noreply.github.com'
           git add bottle-configs/copilot-cli.json
           git commit -m "chore: upgrade copilot-cli to ${GITHUB_REF##*/}"
+      - name: Set pull-request variables
+        run: |
+          echo ::set-output name=pr_title::"chore: upgrade copilot-cli to ${GITHUB_REF##*/}"
+          echo ::set-output name=pr_body::"Created by ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
       - name: Create pull-request
         uses: peter-evans/create-pull-request@v3
+        env:
+          PULL_REQUEST_TITLE: ${{ steps.vars.outputs.pr_title }}
+          PULL_REQUEST_BODY: ${{ steps.vars.outputs.pr_body }}
         with:
           path: homebrew-tap
           delete-branch: true
           push-to-fork: ecs-cicd-bot/copilot-pipeline-test
-          title: "chore: upgrade copilot-cli to ${GITHUB_REF##*/}"
-          body: "Created by ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-          branch: "upgrade-copilot-${GITHUB_REF##*/}"
+          branch: "upgrade-copilot"
+          branch-suffix: short-commit-hash
           token: ${{ secrets.ECS_CICD_BOT }}
