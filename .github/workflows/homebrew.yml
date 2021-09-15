@@ -116,4 +116,3 @@ jobs:
           path: homebrew-tap
           delete-branch: true
           branch: upgrade-copilot-${GITHUB_REF##*/}
-          push-to-fork: efekarakus/copilot-pipeline-test
