@@ -118,5 +118,7 @@ jobs:
           path: homebrew-tap
           delete-branch: true
           push-to-fork: ecs-cicd-bot/copilot-pipeline-test
-          branch: upgrade-copilot-REPLACEME
+          title: "chore: upgrade copilot-cli to ${GITHUB_REF##*/}"
+          body: "Created by ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          branch: "upgrade-copilot-${GITHUB_REF##*/}"
           token: ${{ secrets.ECS_CICD_BOT }}
