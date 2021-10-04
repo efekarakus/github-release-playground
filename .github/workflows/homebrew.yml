@@ -11,31 +11,39 @@ jobs:
       - name: macOS/amd64 binary
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          curl -Lo copilot-darwin-amd64 https://github.com/efekarakus/github-release-playground/releases/download/${GITHUB_REF##*/}/copilot-darwin-amd64
+          version="${GITHUB_REF##*/}"
+          semvar="${version:1}"
+          curl -Lo copilot-darwin-amd64 https://github.com/efekarakus/github-release-playground/releases/download/${version}/copilot-darwin-amd64
           cp copilot-darwin-amd64 copilot
           chmod +x copilot
-          tar czf copilot_${GITHUB_REF##*/}_macOS_amd64.tar.gz copilot
+          tar czf copilot_${semvar}_macOS_amd64.tar.gz copilot
       - name: macOS/arm64 binary
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          curl -Lo copilot-darwin-arm64 https://github.com/efekarakus/github-release-playground/releases/download/${GITHUB_REF##*/}/copilot-darwin-arm64
+          version="${GITHUB_REF##*/}"
+          semvar="${version:1}"
+          curl -Lo copilot-darwin-arm64 https://github.com/efekarakus/github-release-playground/releases/download/${version}/copilot-darwin-arm64
           cp copilot-darwin-arm64 copilot
           chmod +x copilot
-          tar czf copilot_${GITHUB_REF##*/}_macOS_arm64.tar.gz copilot
+          tar czf copilot_${semvar}_macOS_arm64.tar.gz copilot
       - name: linux/amd64 binary
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          curl -Lo copilot-linux https://github.com/efekarakus/github-release-playground/releases/download/${GITHUB_REF##*/}/copilot-linux
+          version="${GITHUB_REF##*/}"
+          semvar="${version:1}"
+          curl -Lo copilot-linux https://github.com/efekarakus/github-release-playground/releases/download/${version}/copilot-linux
           cp copilot-linux copilot
           chmod +x copilot
-          tar czf copilot_${GITHUB_REF##*/}_linux_amd64.tar.gz copilot
+          tar czf copilot_${semvar}_linux_amd64.tar.gz copilot
       - name: linux/arm64 binary
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          curl -Lo copilot-linux-arm64 https://github.com/efekarakus/github-release-playground/releases/download/${GITHUB_REF##*/}/copilot-linux-arm64
+          version="${GITHUB_REF##*/}"
+          semvar="${version:1}"
+          curl -Lo copilot-linux-arm64 https://github.com/efekarakus/github-release-playground/releases/download/${version}/copilot-linux-arm64
           cp copilot-linux-arm64 copilot
           chmod +x copilot
-          tar czf copilot_${GITHUB_REF##*/}_linux_arm64.tar.gz copilot
+          tar czf copilot_${semvar}_linux_arm64.tar.gz copilot
       - name: Save archive files
         uses: actions/upload-artifact@v2
         with:
@@ -76,7 +84,9 @@ jobs:
       - name: Update version
         run: |
           tmp=$(mktemp)
-          jq --arg version "${GITHUB_REF##*/}" '.version = $version' homebrew-tap/bottle-configs/copilot-cli.json > "$tmp" && mv "$tmp" homebrew-tap/bottle-configs/copilot-cli.json
+          version="${GITHUB_REF##*/}"
+          semvar="${version:1}"
+          jq --arg version "${semvar}" '.version = $version' homebrew-tap/bottle-configs/copilot-cli.json > "$tmp" && mv "$tmp" homebrew-tap/bottle-configs/copilot-cli.json
       - name: Update root_url
         run: |
           tmp=$(mktemp)
