@@ -95,22 +95,22 @@ jobs:
           jq --arg version "${version}" --arg semvar "${semvar}" '.bottle.root_url = "https://github.com/aws/copilot-cli/releases/download/" + $version + "/copilot_" + $semvar + "_"' homebrew-tap/bottle-configs/copilot-cli.json > "$tmp" && mv "$tmp" homebrew-tap/bottle-configs/copilot-cli.json
       - name: Update sierra
         run: |
-          sha=$(openssl dgst -sha256 ${{steps.download.outputs.download-path}}/copilot_${GITHUB_REF##*/}_macOS_amd64.tar.gz | awk '{print $NF}') 
+          sha=$(openssl dgst -sha256 ${{steps.download.outputs.download-path}}/copilot_${GITHUB_REF##*/:1}_macOS_amd64.tar.gz | awk '{print $NF}') 
           tmp=$(mktemp)
           jq --arg sha "$sha" '.bottle.sha256.sierra = "'$sha'"' homebrew-tap/bottle-configs/copilot-cli.json > "$tmp" && mv "$tmp" homebrew-tap/bottle-configs/copilot-cli.json
       - name: Update arm64_big_sur
         run: |
-          sha=$(openssl dgst -sha256 ${{steps.download.outputs.download-path}}/copilot_${GITHUB_REF##*/}_macOS_arm64.tar.gz | awk '{print $NF}') 
+          sha=$(openssl dgst -sha256 ${{steps.download.outputs.download-path}}/copilot_${GITHUB_REF##*/:1}_macOS_arm64.tar.gz | awk '{print $NF}') 
           tmp=$(mktemp)
           jq --arg sha "$sha" '.bottle.sha256.arm64_big_sur = "'$sha'"' homebrew-tap/bottle-configs/copilot-cli.json > "$tmp" && mv "$tmp" homebrew-tap/bottle-configs/copilot-cli.json
       - name: Update linux
         run: |
-          sha=$(openssl dgst -sha256 ${{steps.download.outputs.download-path}}/copilot_${GITHUB_REF##*/}_linux_amd64.tar.gz | awk '{print $NF}') 
+          sha=$(openssl dgst -sha256 ${{steps.download.outputs.download-path}}/copilot_${GITHUB_REF##*/:1}_linux_amd64.tar.gz | awk '{print $NF}') 
           tmp=$(mktemp)
           jq --arg sha "$sha" '.bottle.sha256.linux = "'$sha'"' homebrew-tap/bottle-configs/copilot-cli.json > "$tmp" && mv "$tmp" homebrew-tap/bottle-configs/copilot-cli.json
       - name: Update linux_arm
         run: |
-          sha=$(openssl dgst -sha256 ${{steps.download.outputs.download-path}}/copilot_${GITHUB_REF##*/}_linux_arm64.tar.gz | awk '{print $NF}') 
+          sha=$(openssl dgst -sha256 ${{steps.download.outputs.download-path}}/copilot_${GITHUB_REF##*/:1}_linux_arm64.tar.gz | awk '{print $NF}') 
           tmp=$(mktemp)
           jq --arg sha "$sha" '.bottle.sha256.linux_arm = "'$sha'"' homebrew-tap/bottle-configs/copilot-cli.json > "$tmp" && mv "$tmp" homebrew-tap/bottle-configs/copilot-cli.json
       - name: Print file
